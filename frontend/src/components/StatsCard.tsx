@@ -33,11 +33,17 @@ const StatsCard: React.FC<Props> = ({ title, count, variant = "default" }) => {
   const { bg, accent } = variantStyles[variant];
 
   return (
-    <Card style={{ backgroundColor: bg }}>
+    <Card
+      style={{
+        backgroundColor: bg,
+        borderLeft: `4px solid ${accent}`,
+      }}
+    >
       <p
         style={{
-          fontSize: "0.875rem",
+          fontSize: "0.85rem",
           color: colors.textMuted,
+          marginBottom: "6px",
         }}
       >
         {title}
@@ -45,7 +51,7 @@ const StatsCard: React.FC<Props> = ({ title, count, variant = "default" }) => {
 
       <h2
         style={{
-          fontSize: "1.75rem",
+          fontSize: "1.6rem",
           fontWeight: 700,
           color: accent,
         }}
