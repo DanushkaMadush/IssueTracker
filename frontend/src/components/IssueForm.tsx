@@ -18,6 +18,7 @@ const inputStyle: React.CSSProperties = {
   background: colors.surface,
   color: colors.text,
   fontSize: "0.9rem",
+  fontFamily: "inherit",
 };
 
 const labelStyle: React.CSSProperties = {
@@ -26,7 +27,8 @@ const labelStyle: React.CSSProperties = {
   marginBottom: "4px",
   display: "block",
   textAlign: "left",
-  width: "100%", 
+  width: "100%",
+  fontFamily: "inherit", 
 };
 
 const IssueForm: React.FC<Props> = ({ mode, issue, onClose, onSuccess }) => {
@@ -135,6 +137,7 @@ const IssueForm: React.FC<Props> = ({ mode, issue, onClose, onSuccess }) => {
           cursor: "pointer",
           fontWeight: 600,
           marginTop: "20px",
+          fontFamily: "inherit",
         }}
       >
         {loading
