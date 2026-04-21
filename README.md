@@ -123,7 +123,7 @@ Example values:
 ```env
 PORT=5000
 MONGO_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/issuetracker
-JWT_SECRET=<your-strong-secret>
+JWT_SECRET=<secret>
 ```
 
 Root `.env` is used by Docker Compose to pass frontend build arg:
