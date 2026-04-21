@@ -2,6 +2,8 @@ import React from "react";
 import { colors } from "../theme/colors";
 import StatsSection from "../components/StatsSection";
 import IssuesSection from "../components/IssuesSection";
+import Button from "../components/Button";
+import { exportIssuesToCSV } from "../utility/exportIssues";
 
 const HomePage: React.FC = () => {
   return (
@@ -19,15 +21,28 @@ const HomePage: React.FC = () => {
       <StatsSection />
 
       <div style={{ marginTop: "30px" }}>
-        <h2
+        <div
           style={{
-            color: colors.text,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             marginBottom: "20px",
-            fontSize: "16px",
           }}
         >
-          Recent Issues
-        </h2>
+          <h2
+            style={{
+              color: colors.text,
+              marginBottom: "20px",
+              fontSize: "16px",
+            }}
+          >
+            Recent Issues
+          </h2>
+
+          <Button variant="secondary" onClick={exportIssuesToCSV}>
+            Export
+          </Button>
+        </div>
 
         <IssuesSection />
       </div>
