@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getIssues } from "../api/services/issue.service";
 import { colors } from "../theme/colors";
 import IssueCard from "./IssueCard";
+import { motion } from "framer-motion";
 
 interface Issue {
   _id: string;
@@ -42,8 +43,22 @@ const IssuesSection: React.FC = () => {
     return <p style={{ color: colors.textMuted }}>No issues found</p>;
   }
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+    >
       {issues.map((issue) => (
         <IssueCard
           key={issue._id}
@@ -56,7 +71,7 @@ const IssuesSection: React.FC = () => {
           }}
         />
       ))}
-    </div>
+    </motion.div>
   );
 };
 
