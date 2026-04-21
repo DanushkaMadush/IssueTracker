@@ -53,11 +53,6 @@ const StatsSection: React.FC = () => {
         variant="success"
       />
 
-      <StatsCard
-        title="Closed"
-        count={stats["Closed"] || 0}
-        variant="default"
-      />
     </div>
   );
 };
