@@ -1,4 +1,3 @@
-// pages/HomePage.tsx
 import React from "react";
 import { colors } from "../theme/colors";
 import StatsSection from "../components/StatsSection";
@@ -13,21 +12,21 @@ const HomePage: React.FC = () => {
         padding: "20px",
       }}
     >
-      <h1 style={{ color: colors.text, marginBottom: "20px" }}>
+      <h1 style={{ color: colors.text, marginBottom: "50px" }}>
         Issue Tracker
       </h1>
 
       <StatsSection />
 
-      <div style={{ marginTop: "24px" }}>
+      <div style={{ marginTop: "30px" }}>
         <h2
           style={{
             color: colors.text,
-            marginBottom: "12px",
+            marginBottom: "20px",
             fontSize: "16px",
           }}
         >
-          Issues
+          Recent Issues
         </h2>
 
         <IssuesSection />
