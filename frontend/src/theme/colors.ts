@@ -22,14 +22,24 @@ export const colors = {
   statusInProgress: "#FFA500",
   statusResolved: "#4CAF50",
   statusClosed: "#808080",
+  statusOpenBg: "#FF6B6B20",
+  statusInProgressBg: "#FFA50020",
+  statusResolvedBg: "#4CAF5020",
+  statusClosedBg: "#80808020",
 
   // priority colors
   priorityLow: "#4CAF50",
   priorityMedium: "#FFA500",
   priorityHigh: "#FF6B6B",
+  priorityLowBg: "#4CAF5020",
+  priorityMediumBg: "#FFA50020",
+  priorityHighBg: "#FF6B6B20",
 
   // severity colors
   severityMinor: "#22C55E",
   severityMajor: "#F59E0B",
   severityCritical: "#EF4444",
+  severityMinorBg: "#22C55E20",
+  severityMajorBg: "#F59E0B20",
+  severityCriticalBg: "#EF444420",
 };
