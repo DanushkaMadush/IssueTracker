@@ -87,20 +87,7 @@ const IssuesSection: React.FC = () => {
         animate="visible"
         style={{ display: "flex", flexDirection: "column", gap: "12px" }}
       >
-        <button
-          onClick={openCreate}
-          style={{
-            marginBottom: "12px",
-            background: colors.primary,
-            color: "#fff",
-            padding: "8px 12px",
-            borderRadius: "8px",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          + New Issue
-        </button>
+
         {issues.map((issue) => (
           <IssueCard
             key={issue._id}
