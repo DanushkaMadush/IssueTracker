@@ -4,41 +4,40 @@ import { colors } from "../theme/colors";
 import IssueCard from "./IssueCard";
 import { motion } from "framer-motion";
 import PaginationArrows from "./PaginationArrows";
-
-interface Issue {
-  _id: string;
-  title: string;
-  status: "Open" | "In Progress" | "Resolved" | "Closed";
-  priority: "Low" | "Medium" | "High";
-  severity: "Minor" | "Major" | "Critical";
-}
+import Modal from "./Modal";
+import IssueForm from "./IssueForm";
+import type { Issue } from "../api/types/issue.types";
+import FloatingButton from "./FloatingButton";
 
 const IssuesSection: React.FC = () => {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
+  const [mode, setMode] = useState<"create" | "edit">("create");
 
   useEffect(() => {
-    const fetchIssues = async (currentPage: number) => {
-      setLoading(true);
-      try {
-        const res = await getIssues({
-          page: currentPage,
-          limit: 10,
-        });
-
-        setIssues(res.data);
-        setTotalPages(res.pagination.totalPages);
-      } catch (err) {
-        console.error("Failed to fetch issues", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchIssues(page);
   }, [page]);
+
+  const fetchIssues = async (pageNumber: number) => {
+    setLoading(true);
+    try {
+      const res = await getIssues({
+        page: pageNumber,
+        limit: 10,
+      });
+
+      setIssues(res.data);
+      setTotalPages(res.pagination.totalPages);
+    } catch (err) {
+      console.error("Failed to fetch issues", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return <p style={{ color: colors.textMuted }}>Loading issues...</p>;
@@ -68,6 +67,18 @@ const IssuesSection: React.FC = () => {
     },
   };
 
+  const openCreate = () => {
+    setMode("create");
+    setSelectedIssue(null);
+    setIsModalOpen(true);
+  };
+
+  const openEdit = (issue: Issue) => {
+    setMode("edit");
+    setSelectedIssue(issue);
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <motion.div
@@ -76,6 +87,7 @@ const IssuesSection: React.FC = () => {
         animate="visible"
         style={{ display: "flex", flexDirection: "column", gap: "12px" }}
       >
+
         {issues.map((issue) => (
           <IssueCard
             key={issue._id}
@@ -83,9 +95,7 @@ const IssuesSection: React.FC = () => {
             status={issue.status}
             priority={issue.priority}
             severity={issue.severity}
-            onClick={() => {
-              console.log("Clicked issue:", issue._id);
-            }}
+            onClick={() => openEdit(issue)}
           />
         ))}
       </motion.div>
@@ -95,6 +105,18 @@ const IssuesSection: React.FC = () => {
         onPrev={handlePrev}
         onNext={handleNext}
       />
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <IssueForm
+          mode={mode}
+          issue={selectedIssue}
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={() => fetchIssues(page)}
+        />
+      </Modal>
+
+      <FloatingButton onClick={openCreate} label="New Issue" />
+      
     </>
   );
 };
