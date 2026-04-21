@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { colors } from "../theme/colors";
 
 type ButtonVariant = "primary" | "secondary" | "tertiary";
@@ -10,35 +10,62 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   children,
+  disabled,
+  style,
   ...props
 }) => {
-  const baseStyle =
-    "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 border focus:outline-none";
+  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
-  const variants: Record<ButtonVariant, string> = {
-    primary: `
-      bg-[${colors.primary}] 
-      text-white 
-      border-[${colors.primary}]
-      hover:opacity-90
-      active:scale-95
-    `,
-    secondary: `
-      bg-[${colors.surface}] 
-      text-[${colors.text}] 
-      border-[${colors.border}]
-      hover:bg-[${colors.border}]
-    `,
-    tertiary: `
-      bg-transparent 
-      text-[${colors.textMuted}] 
-      border-transparent
-      hover:text-[${colors.text}]
-    `,
+  const baseStyle: React.CSSProperties = {
+    padding: "10px 16px",
+    borderRadius: "8px",
+    fontSize: "16px",
+    fontWeight: 600,
+    cursor: disabled ? "not-allowed" : "pointer",
+    transition: "all 0.2s ease",
+    border: "none",
+    outline: "none",
+    opacity: disabled ? 0.6 : 1,
+  };
+
+  const variants: Record<ButtonVariant, React.CSSProperties> = {
+    primary: {
+      backgroundColor: isHovered ? colors.primaryHover : colors.primary,
+      color: colors.text,
+      border: `1px solid ${colors.primary}`,
+      boxShadow: isHovered ? `0 4px 12px ${colors.primaryShadow}` : "none",
+      transform: isActive ? "scale(0.97)" : "scale(1)",
+    },
+
+    secondary: {
+      backgroundColor: isHovered ? colors.border : colors.surface,
+      color: colors.text,
+      border: `1px solid ${colors.border}`,
+      transform: isActive ? "scale(0.97)" : "scale(1)",
+    },
+
+    tertiary: {
+      backgroundColor: "transparent",
+      color: isHovered ? colors.text : colors.textMuted,
+      border: "1px solid transparent",
+      transform: isActive ? "scale(0.97)" : "scale(1)",
+    },
   };
 
   return (
-    <button className={`${baseStyle} ${variants[variant]}`} {...props}>
+    <button
+      style={{ ...baseStyle, ...variants[variant], ...style }}
+      disabled={disabled}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsActive(false);
+      }}
+      onMouseDown={() => setIsActive(true)}
+      onMouseUp={() => setIsActive(false)}
+      {...props}
+    >
       {children}
     </button>
   );
