@@ -1,24 +1,57 @@
+import React from "react";
 import Card from "./Card";
+import { colors } from "../theme/colors";
+
+type StatsVariant = "default" | "success" | "warning" | "danger";
 
 interface Props {
   title: string;
   count: number;
-  bgColor?: string;
-  titleColor?: string;
-  countColor?: string;
+  variant?: StatsVariant;
 }
 
-const StatsCard: React.FC<Props> = ({
-  title,
-  count,
-  bgColor = "bg-white",
-  titleColor = "text-black",
-  countColor = "text-black",
-}) => {
+const variantStyles: Record<StatsVariant, { bg: string; accent: string }> = {
+  default: {
+    bg: colors.card,
+    accent: colors.primary,
+  },
+  success: {
+    bg: colors.surface,
+    accent: colors.statusResolved,
+  },
+  warning: {
+    bg: colors.surface,
+    accent: colors.statusInProgress,
+  },
+  danger: {
+    bg: colors.surface,
+    accent: colors.statusOpen,
+  },
+};
+
+const StatsCard: React.FC<Props> = ({ title, count, variant = "default" }) => {
+  const { bg, accent } = variantStyles[variant];
+
   return (
-    <Card className={bgColor}>
-      <p className={`text-sm ${titleColor}`}>{title}</p>
-      <h2 className={`text-2xl font-bold ${countColor}`}>{count}</h2>
+    <Card style={{ backgroundColor: bg }}>
+      <p
+        style={{
+          fontSize: "0.875rem",
+          color: colors.textMuted,
+        }}
+      >
+        {title}
+      </p>
+
+      <h2
+        style={{
+          fontSize: "1.75rem",
+          fontWeight: 700,
+          color: accent,
+        }}
+      >
+        {count}
+      </h2>
     </Card>
   );
 };

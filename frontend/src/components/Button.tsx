@@ -1,4 +1,5 @@
 import React from "react";
+import { colors } from "../theme/colors";
 
 type ButtonVariant = "primary" | "secondary" | "tertiary";
 
@@ -12,12 +13,28 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyle =
-    "px-4 py-2 rounded-md text-sm font-medium transition border";
+    "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 border focus:outline-none";
 
   const variants: Record<ButtonVariant, string> = {
-    primary: "bg-black text-white border-black",
-    secondary: "bg-white text-black border-black",
-    tertiary: "bg-transparent text-black border-transparent",
+    primary: `
+      bg-[${colors.primary}] 
+      text-white 
+      border-[${colors.primary}]
+      hover:opacity-90
+      active:scale-95
+    `,
+    secondary: `
+      bg-[${colors.surface}] 
+      text-[${colors.text}] 
+      border-[${colors.border}]
+      hover:bg-[${colors.border}]
+    `,
+    tertiary: `
+      bg-transparent 
+      text-[${colors.textMuted}] 
+      border-transparent
+      hover:text-[${colors.text}]
+    `,
   };
 
   return (
