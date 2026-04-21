@@ -20,7 +20,7 @@ export const colors = {
   // status colors
   statusOpen: "#FF6B6B",
   statusInProgress: "#FFA500",
-  statusResolved: "#4CAF50",
+  statusResolved: "#22C55E",
   statusClosed: "#808080",
   statusOpenBg: "#FF6B6B20",
   statusInProgressBg: "#FFA50020",
@@ -28,7 +28,7 @@ export const colors = {
   statusClosedBg: "#80808020",
 
   // priority colors
-  priorityLow: "#4CAF50",
+  priorityLow: "#22C55E",
   priorityMedium: "#FFA500",
   priorityHigh: "#FF6B6B",
   priorityLowBg: "#4CAF5020",
