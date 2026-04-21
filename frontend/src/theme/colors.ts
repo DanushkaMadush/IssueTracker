@@ -2,7 +2,7 @@ export const colors = {
   primary: "#00BC7A",
   primaryHover: "#00A86B",
   primaryShadow: "rgba(0, 188, 122, 0.3)",
-  
+
   secondary: "#015F97",
 
   background: "#070C20",
@@ -11,6 +11,7 @@ export const colors = {
 
   text: "#F9FAFB",
   textMuted: "#94A3B8",
+  textSubtle: "#64748B",
 
   border: "#334155",
 
