@@ -7,6 +7,7 @@ import PaginationArrows from "./PaginationArrows";
 import Modal from "./Modal";
 import IssueForm from "./IssueForm";
 import type { Issue } from "../api/types/issue.types";
+import FloatingButton from "./FloatingButton";
 
 const IssuesSection: React.FC = () => {
   const [issues, setIssues] = useState<Issue[]>([]);
@@ -123,9 +124,12 @@ const IssuesSection: React.FC = () => {
           mode={mode}
           issue={selectedIssue}
           onClose={() => setIsModalOpen(false)}
-          onSuccess={() => setPage(1)}
+          onSuccess={() => fetchIssues(page)}
         />
       </Modal>
+
+      <FloatingButton onClick={openCreate} label="New Issue" />
+      
     </>
   );
 };

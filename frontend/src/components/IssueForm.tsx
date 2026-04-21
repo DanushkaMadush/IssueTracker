@@ -24,6 +24,9 @@ const labelStyle: React.CSSProperties = {
   fontSize: "0.75rem",
   color: colors.text,
   marginBottom: "4px",
+  display: "block",
+  textAlign: "left",
+  width: "100%", 
 };
 
 const IssueForm: React.FC<Props> = ({ mode, issue, onClose, onSuccess }) => {
