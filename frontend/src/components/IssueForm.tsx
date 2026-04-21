@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { colors } from "../theme/colors";
-import { createIssue, updateIssue } from "../api/services/issue.service";
-import type { Issue, Priority, Severity } from "../api/types/issue.types";
+import {
+  createIssue,
+  updateIssue,
+  updateIssueStatus,
+} from "../api/services/issue.service";
+import type {
+  Issue,
+  IssueStatus,
+  Priority,
+  Severity,
+} from "../api/types/issue.types";
+import Button from "./Button";
 
 interface Props {
   mode: "create" | "edit";
@@ -28,7 +38,7 @@ const labelStyle: React.CSSProperties = {
   display: "block",
   textAlign: "left",
   width: "100%",
-  fontFamily: "inherit", 
+  fontFamily: "inherit",
 };
 
 const IssueForm: React.FC<Props> = ({ mode, issue, onClose, onSuccess }) => {
@@ -72,6 +82,18 @@ const IssueForm: React.FC<Props> = ({ mode, issue, onClose, onSuccess }) => {
       console.error("Failed to save issue", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleStatusChange = async (newStatus: IssueStatus) => {
+    if (!issue) return;
+
+    try {
+      await updateIssueStatus(issue._id, newStatus);
+      onSuccess();
+      onClose();
+    } catch (err) {
+      console.error("Failed to update status", err);
     }
   };
 
@@ -124,6 +146,69 @@ const IssueForm: React.FC<Props> = ({ mode, issue, onClose, onSuccess }) => {
           <option>Critical</option>
         </select>
       </div>
+
+      {mode === "edit" && (
+        <div style={{ marginTop: "16px" }}>
+          <div style={{ ...labelStyle, marginBottom: "8px" }}>
+            Change Status
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              gap: "8px",
+            }}
+          >
+            <Button
+              variant="secondary"
+              style={{
+                flex: 1,
+                borderColor: colors.statusOpen,
+                color: colors.statusOpen,
+                backgroundColor:
+                  issue?.status === "Open"
+                    ? `${colors.statusOpen}20`
+                    : undefined,
+              }}
+              onClick={() => handleStatusChange("Open")}
+            >
+              Open
+            </Button>
+
+            <Button
+              variant="secondary"
+              style={{
+                flex: 1,
+                borderColor: colors.statusInProgress,
+                color: colors.statusInProgress,
+                backgroundColor:
+                  issue?.status === "Open"
+                    ? `${colors.statusOpen}20`
+                    : undefined,
+              }}
+              onClick={() => handleStatusChange("In Progress")}
+            >
+              In Progress
+            </Button>
+
+            <Button
+              variant="secondary"
+              style={{
+                flex: 1,
+                borderColor: colors.statusResolved,
+                color: colors.statusResolved,
+                backgroundColor:
+                  issue?.status === "Open"
+                    ? `${colors.statusOpen}20`
+                    : undefined,
+              }}
+              onClick={() => handleStatusChange("Resolved")}
+            >
+              Resolved
+            </Button>
+          </div>
+        </div>
+      )}
 
       <button
         onClick={handleSubmit}
